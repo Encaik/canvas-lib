@@ -11,6 +11,8 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			title: "canvas-lib调试页面",
+			template: "public/index.html",
+			filename: "./index.html",
 		}),
 	],
 	module: {
