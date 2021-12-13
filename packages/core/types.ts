@@ -1,5 +1,5 @@
-import { Color } from "./color";
-import { Point } from "./point";
+import { Color } from "./src/color";
+import { Point } from "./src/point";
 
 export interface CanvasOptions {
   width?: number,

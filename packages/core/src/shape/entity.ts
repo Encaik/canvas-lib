@@ -1,6 +1,6 @@
+import { EntityOptions } from "../..";
 import { Color } from "../color";
 import { Point } from "../point";
-import { EntityOptions } from "../type";
 
 export class Entity {
   public id: string | number | symbol;

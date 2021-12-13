@@ -1,4 +1,4 @@
-import { CanvasOptions } from "./type";
+import { CanvasOptions } from "../types";
 import { Entity, Rect } from "./shape";
 
 

@@ -8,5 +8,6 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"types":"./types/index.d.ts"
 }

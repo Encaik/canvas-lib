@@ -1,4 +1,4 @@
-import { EntityOptions } from "../type";
+import { EntityOptions } from "../..";
 import { Entity } from "./entity";
 
 export class Rect extends Entity {
