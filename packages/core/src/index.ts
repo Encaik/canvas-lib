@@ -3,3 +3,4 @@ export * from './canvas';
 export * from './shape/index';
 export * from './point';
 export * from './engine';
+export * from './render';

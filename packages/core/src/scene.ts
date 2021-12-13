@@ -1,3 +1,4 @@
+import { Point } from './point';
 import { Entity } from './shape';
 
 export class Scene {
@@ -22,5 +23,15 @@ export class Scene {
     const temp = this.entityList[len - 1];
     this.entityList[idx] = temp;
     this.entityList.pop();
+  }
+
+  getContainsShapes(point:Point){
+    let shapes = [];
+    this.entityList.forEach(entity=>{
+      if(entity.isContains(point)){
+        shapes.push(entity)
+      }
+    })
+    return shapes;
   }
 }

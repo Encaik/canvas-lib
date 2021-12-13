@@ -17,4 +17,8 @@ export class Entity {
     if (options.fillColor) this.fillColor = options.fillColor;
     if (options.strokeColor) this.strokeColor = options.strokeColor;
   }
+
+  isContains(point: Point):boolean {
+    throw new Error('Method not implemented.');
+  }
 }
