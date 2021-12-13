@@ -4,7 +4,7 @@ const el = document.createElement("canvas");
 el.id = "canvas";
 document.body.appendChild(el);
 
-const canvas = new CL.Canvas("canvas", {
+const {canvas,scene} = new CL.Engine("canvas", {
     width: window.innerWidth,
     height: window.innerHeight,
     bgColor: new CL.Color("#000")
@@ -20,3 +20,4 @@ const rect = new CL.Rect({
 });
 
 canvas.addEntity(rect);
+console.log(canvas,scene);

@@ -3,6 +3,15 @@ import { Entity } from './shape';
 export class Scene {
   public entityList: Array<Entity>;
 
+  constructor(){
+    this.initScene();
+  }
+
+  initScene(){
+    this.entityList = [];
+    return this;
+  };
+
   add(entity: Entity) {
     this.entityList.push(entity);
   }

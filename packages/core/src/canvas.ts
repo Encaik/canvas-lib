@@ -1,11 +1,14 @@
 import { CanvasOptions } from "../types";
+import { Scene } from "./scene";
 import { Entity, Rect } from "./shape";
 
 
 export class Canvas {
   private _ctx: CanvasRenderingContext2D;
+  private _scene: Scene;
 
-  constructor(container: string, options?: CanvasOptions) {
+  constructor(container: string, scene:Scene,options?: CanvasOptions) {
+    this._scene = scene;
     this.initCanvas(container, options);
   }
 
@@ -25,9 +28,9 @@ export class Canvas {
   }
 
   public addEntity(entity: Entity) {
-    console.log(entity);
     if (entity.type === "rect") {
       this.addRect(<Rect>entity);
+      this._scene.entityList.push(entity);
     }
   }
 
