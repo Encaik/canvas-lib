@@ -14,3 +14,5 @@ export interface EntityOptions {
   fillColor?: Color;
   strokeColor?: Color;
 }
+
+export type EventType = "click"|"hover";

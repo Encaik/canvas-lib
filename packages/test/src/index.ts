@@ -4,10 +4,14 @@ const el = document.createElement("canvas");
 el.id = "canvas";
 document.body.appendChild(el);
 
-const {canvas,scene} = new CL.Engine("canvas", {
+const engine = new CL.Engine("canvas", {
     width: window.innerWidth,
     height: window.innerHeight,
     bgColor: new CL.Color("#000")
+});
+
+engine.on("click",(e)=>{
+    console.log(e);
 });
 
 const rect = new CL.Rect({
@@ -26,12 +30,12 @@ const rect = new CL.Rect({
 // },1);
 
 window.addEventListener("mousemove",(e)=>{
-    const list = scene.getContainsShapes(new CL.Point(e.x,e.y));
+    const list = engine.scene.getContainsShapes(new CL.Point(e.x,e.y));
     if(list.length){
         console.log(list[0]);
         list[0]["strokeColor"] = new CL.Color("#00f");
     }
 });
 
-canvas.addEntity(rect);
-console.log(canvas,scene);
+engine.canvas.addEntity(rect);
+console.log(engine.canvas,engine.scene);
