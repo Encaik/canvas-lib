@@ -3,19 +3,22 @@ import { Event } from "./event";
 
 export class EventDispatch {
     private _events:{[key in EventType]:Event[]};
+    
+    
+    public get events() : {[key in EventType]:Event[]} {
+        return this._events;
+    }
 
     constructor(){
         this._events = Object.create(null);
     }
 
     on(type:string,fn:(event: Event)=>void){
-        console.log(type,fn);
         if(this._events[type]){
             this._events[type].push(fn);
         }else{
             this._events[type] = [fn];
         }
-        this.dispatch(type);
     }
 
     off(type:string,fn:(event: Event)=>void){
@@ -31,10 +34,10 @@ export class EventDispatch {
         }
     }
 
-    dispatch(type:string){
+    dispatch(type:string,data:any){
         if(this._events[type]){
             this._events[type].forEach(fn => {
-                fn(new Event(<EventType>type,{aaa:"111"}));
+                fn(new Event(<EventType>type,data));
             });
         }
     }

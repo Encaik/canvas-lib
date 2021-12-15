@@ -15,4 +15,4 @@ export interface EntityOptions {
   strokeColor?: Color;
 }
 
-export type EventType = "click"|"hover";
+export type EventType = "click"|"mousemove";
