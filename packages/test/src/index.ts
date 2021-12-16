@@ -14,9 +14,11 @@ engine.on("click",(e)=>{
     console.log(e);
 });
 
-engine.on("mousemove",(e)=>{
-    console.log(e);
-});
+setTimeout(() => {
+    engine.off("click",(e)=>{
+        console.log(e);
+    });
+}, 2000);
 
 const rect = new CL.Rect({
     id: "1",
@@ -27,19 +29,5 @@ const rect = new CL.Rect({
     fillColor: new CL.Color("#f55"),
 });
 
-
-// setInterval(()=>{
-//     rect.center.x+=0.1;
-//     rect.center.y+=0.1;
-// },1);
-
-// window.addEventListener("mousemove",(e)=>{
-//     const list = engine.scene.getContainsShapes(new CL.Point(e.x,e.y));
-//     if(list.length){
-//         console.log(list[0]);
-//         list[0]["strokeColor"] = new CL.Color("#00f");
-//     }
-// });
-
 engine.canvas.addEntity(rect);
-console.log(engine.canvas,engine.scene);
+console.log(engine);

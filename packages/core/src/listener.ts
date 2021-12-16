@@ -1,32 +1,23 @@
-import { EventDispatch } from "./event-dispatch";
+import { EventType } from "../types";
 
 export class Listener {
-    private _target:any;
-    private _dispatch:EventDispatch;
-
-    constructor(dispatch:EventDispatch,target:any){
-        this._dispatch = dispatch;
-        this._target = target;
-        this.initListener();
+    public addEventListener(type:EventType,fn:any){
+        switch (type) {
+        case "click":
+            window.addEventListener("click",fn);
+            break;
+        default:
+            break;
+        }
     }
 
-    private initListener(){
-        // Object.keys(this._dispatch.events).forEach(key=>{
-        //     this[key]();
-        // });
-        this.click();
-        this.mousemove();
-    }
-
-    private click(){
-        window.addEventListener("click",(event)=>{
-            this._dispatch.dispatch("click",{event,target:this._target});
-        });
-    }
-
-    private mousemove(){
-        window.addEventListener("mousemove",(event)=>{
-            this._dispatch.dispatch("mousemove",{event,target:this._target});
-        });
+    public removeEventListener(type:EventType,fn:any){
+        switch (type) {
+        case "click":
+            window.removeEventListener("click",fn);
+            break;
+        default:
+            break;
+        }
     }
 }
