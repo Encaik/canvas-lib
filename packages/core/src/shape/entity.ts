@@ -18,6 +18,7 @@ export class Entity {
         if (options.strokeColor) this.strokeColor = options.strokeColor;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     isContains(point: Point):boolean {
         throw new Error("Method not implemented.");
     }

@@ -2,22 +2,10 @@ import { EventType } from "../types";
 
 export class Listener {
     public addEventListener(type:EventType,fn:any){
-        switch (type) {
-        case "click":
-            window.addEventListener("click",fn);
-            break;
-        default:
-            break;
-        }
+        window.addEventListener(type,fn);
     }
 
     public removeEventListener(type:EventType,fn:any){
-        switch (type) {
-        case "click":
-            window.removeEventListener("click",fn);
-            break;
-        default:
-            break;
-        }
+        window.removeEventListener(type,fn);
     }
 }

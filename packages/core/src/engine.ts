@@ -4,7 +4,6 @@ import { CanvasOptions } from "../types";
 import { Render } from "./render";
 import { EventDispatch } from "./event-dispatch";
 import { Event } from "./event";
-import { Listener } from "./listener";
 import { EventType } from "..";
 import { Behavior } from "./behavior";
 
@@ -21,12 +20,12 @@ export class Engine {
         this.scene = new Scene();
         this.canvas = new Canvas(container,this.scene,canvasOptions);
         new Render(this);
-        this.dispatcher = new EventDispatch(new Listener());
+        this.dispatcher = new EventDispatch();
         new Behavior(this);
     }
 
     on(type:EventType,fn:(event: Event)=>void){
-        this.dispatcher.on(type,this,fn);
+        this.dispatcher.on(new Event(type,this,{}),fn);
     }
 
     off(type:EventType,fn:(event: Event)=>void){

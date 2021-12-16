@@ -14,6 +14,10 @@ engine.on("click",(e)=>{
     console.log(e);
 });
 
+engine.on("shapehover",(e)=>{
+    console.log(e);
+});
+
 const rect = new CL.Rect({
     id: "1",
     center: new CL.Point(523, 150),
