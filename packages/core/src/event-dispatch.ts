@@ -3,7 +3,7 @@ import { Event } from "./event";
 import { Listener } from "./listener";
 
 export class EventDispatch {
-    private _events:{[key in EventType]:((Event)=>void)[]};
+    private _events:any;
     private _listener:Listener;
 
     constructor(listener:Listener){
@@ -11,12 +11,18 @@ export class EventDispatch {
         this._listener = listener;
     }
 
-    on(type:EventType,fn:(event: Event)=>void){
+    on(type:EventType,target:any,fn:(event: Event)=>void){
         if(this._events[type]){
-            this._events[type].push(fn);
+            this._events[type].push({
+                fn,
+                target
+            });
         }else{
-            this._events[type] = [fn];
-            this._listener.addEventListener(type,this.mouseEvent);
+            this._events[type] = [{
+                fn,
+                target
+            }];
+            this._listener.addEventListener(type,this.mouseEvent.bind(this));
         } 
     }
 
@@ -26,7 +32,7 @@ export class EventDispatch {
             const len = this._events[type].length;
             if(len<2&&idx<1){
                 delete this._events[type];
-                this._listener.removeEventListener(type,this.mouseEvent);
+                this._listener.removeEventListener(type,this.mouseEvent.bind(this));
             }else{
                 this._events[type][idx] = this._events[type][len-1];
                 this._events[type].pop();
@@ -34,15 +40,18 @@ export class EventDispatch {
         }
     }
 
-    dispatch(type:string,data:any){
+    dispatch(type:string,event:MouseEvent){
         if(this._events[type]){
-            this._events[type].forEach(fn => {
-                fn(new Event(<EventType>type,data));
+            this._events[type].forEach(_event => {
+                _event.fn(new Event(<EventType>type,{
+                    event,
+                    target:_event.target
+                }));
             });
         }
     }
 
-    mouseEvent(e){
-        console.log(e);
+    mouseEvent(event:MouseEvent){
+        this.dispatch(<EventType>event.type,event);
     }
 }

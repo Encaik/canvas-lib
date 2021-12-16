@@ -14,12 +14,6 @@ engine.on("click",(e)=>{
     console.log(e);
 });
 
-setTimeout(() => {
-    engine.off("click",(e)=>{
-        console.log(e);
-    });
-}, 2000);
-
 const rect = new CL.Rect({
     id: "1",
     center: new CL.Point(523, 150),

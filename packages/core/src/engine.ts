@@ -6,11 +6,11 @@ import { EventDispatch } from "./event-dispatch";
 import { Event } from "./event";
 import { Listener } from "./listener";
 import { EventType } from "..";
+import { Behavior } from "./behavior";
 
 export class Engine {
     public scene: Scene;
     public canvas: Canvas;
-    public render: Render;
     public dispatcher:EventDispatch;
 
     constructor(container: string, canvasOptions?: CanvasOptions){
@@ -20,12 +20,13 @@ export class Engine {
     initEngine(container: string, canvasOptions?: CanvasOptions){
         this.scene = new Scene();
         this.canvas = new Canvas(container,this.scene,canvasOptions);
-        this.render = new Render(this);
+        new Render(this);
         this.dispatcher = new EventDispatch(new Listener());
+        new Behavior(this);
     }
 
     on(type:EventType,fn:(event: Event)=>void){
-        this.dispatcher.on(type,fn);
+        this.dispatcher.on(type,this,fn);
     }
 
     off(type:EventType,fn:(event: Event)=>void){
