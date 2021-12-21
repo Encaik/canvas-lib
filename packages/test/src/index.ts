@@ -10,12 +10,16 @@ const engine = new CL.Engine("canvas", {
     bgColor: new CL.Color("#000")
 });
 
-engine.on("click",(e)=>{
+engine.on("shapein",(e)=>{
     console.log(e);
+    e.data.shape.strokeColor = new CL.Color("#5f5");
+    e.data.shape.strokeWidth = 5;
 });
 
-engine.on("shapehover",(e)=>{
+engine.on("shapeout",(e)=>{
     console.log(e);
+    e.data.shape.strokeColor = null;
+    e.data.shape.strokeWidth = 1;
 });
 
 const rect = new CL.Rect({

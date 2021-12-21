@@ -7,15 +7,17 @@ export class Entity {
     public center: Point;
     public fillColor: Color;
     public strokeColor: Color;
+    public strokeWidth: number;
     public type: string;
 
     constructor(options: EntityOptions) {
         if (!options) return;
-        this.id = options.id;
-        this.center = options.center;
-        if (options.type) this.type = options.type;
-        if (options.fillColor) this.fillColor = options.fillColor;
-        if (options.strokeColor) this.strokeColor = options.strokeColor;
+        this.id = options.id||`${new Date().getMilliseconds()}${Math.round(Math.random()*10)}`;
+        this.center = options.center||new Point(0, 0);
+        this.type = options.type||"rect";
+        this.fillColor = options.fillColor||new Color("#55f");
+        this.strokeColor = options.strokeColor;
+        this.strokeWidth = options.strokeWidth||1;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

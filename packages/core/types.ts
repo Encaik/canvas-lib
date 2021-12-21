@@ -8,11 +8,12 @@ export interface CanvasOptions {
 }
 
 export interface EntityOptions {
-  id: string | number | symbol;
-  center: Point;
+  id?: string | number | symbol;
+  center?: Point;
   type?: string;
   fillColor?: Color;
   strokeColor?: Color;
+  strokeWidth?: number;
 }
 
-export type EventType = "click"|"mousemove"|"shapehover";
+export type EventType = "click"|"mousemove"|"shapehover"|"mousedown"|"mouseup"|"shapein"|"shapeout";

@@ -45,7 +45,7 @@ export class Canvas {
         this._ctx.fillRect(rect.center.x, rect.center.y, rect.width, rect.height);
         if(rect.strokeColor){
             this._ctx.strokeStyle = rect.strokeColor.hex;
-            this._ctx.lineWidth = 5;
+            this._ctx.lineWidth = rect.strokeWidth;
             this._ctx.strokeRect(rect.center.x, rect.center.y, rect.width, rect.height);
         }
     }
