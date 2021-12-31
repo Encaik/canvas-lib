@@ -22,14 +22,13 @@ export class Canvas {
     public initCanvas(container: string, options?: CanvasOptions) {
         if (!container) return;
         this._canvas = document.getElementById(container) as HTMLCanvasElement;
-        this._ctx = this._canvas.getContext("2d");
+        this._ctx = this._canvas.getContext("2d", { alpha: false });
         
         if (options) {
             if (options.width) this._canvas.width= options.width;
             if (options.height) this._canvas.height= options.height;
             if (options.bgColor) {
-                this._ctx.fillStyle = options.bgColor.hex;
-                this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+                this.fillBgStyle();
             }
         }
         return this;
@@ -57,15 +56,37 @@ export class Canvas {
     }
 
     public fillBgStyle(){
+        //绘制背景
         this._ctx.fillStyle = this.options.bgColor.hex;
         this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+        //绘制网格
+        const span = 100;
+        this._ctx.beginPath();
+        this._ctx.lineWidth = 0.1;
+        for(let x=0;x<this._canvas.width;x+=span){
+            this._ctx.moveTo(x,0);
+            this._ctx.lineTo(x,this._canvas.height);
+        }
+        for(let y=0;y<this._canvas.height;y+=span){
+            this._ctx.moveTo(0,y);
+            this._ctx.lineTo(this._canvas.width,y);
+        }
+        this._ctx.strokeStyle="#000";
+        this._ctx.stroke();
     }
 
     public update(){
         this._detection.update();
         this._ctx.clearRect(0,0,this._canvas.width,this._canvas.height);
-        this.fillBgStyle();
+        if (this.options&&this.options.bgColor) {
+            this.fillBgStyle();
+        }
         this._scene.entityList.forEach(entity => this.addEntity(entity,false));
+    }
+
+    public translate(x:number,y:number){
+        this._ctx.translate(x,y);
+        this._detection.translate(x,y);
     }
 
     public detectionShape(point:Point):Entity{

@@ -7,7 +7,7 @@ document.body.appendChild(el);
 const engine = new CL.Engine("canvas", {
     width: window.innerWidth,
     height: window.innerHeight,
-    bgColor: new CL.Color("#000")
+    bgColor: new CL.Color("#ddd")
 });
 
 engine.on("shapein",(e)=>{

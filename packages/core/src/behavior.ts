@@ -27,20 +27,26 @@ export class Behavior {
     onMouseMove(e:Event){
         const pointer = new Point(e.data.event.x,e.data.event.y);
         const offset = [0,0];
-        if(this._isDrag&&this._dragShape){
+        if(this._isDrag){
             if(this._dragBeforePointer){
                 offset[0] = pointer.x-this._dragBeforePointer.x;
                 offset[1] = pointer.y-this._dragBeforePointer.y;
             }
             this._dragBeforePointer = pointer;
-            this._dragShape.center.x += offset[0];
-            this._dragShape.center.y += offset[1];
-            this._engine.dispatcher.dispatch("shapedrag",{
-                event:e.data.event,
-                shape:this._dragShape
-            });
-            this._engine.update();
-            return;
+            if(this._dragShape){
+                this._dragShape.center.x += offset[0];
+                this._dragShape.center.y += offset[1];
+                this._engine.dispatcher.dispatch("shapedrag",{
+                    event:e.data.event,
+                    shape:this._dragShape
+                });
+                this._engine.update();
+                return;
+            }else{
+                this._engine.canvas.translate(offset[0],offset[1]);
+                this._engine.update();
+                return;
+            }  
         }
         //const shapes = this._engine.scene.getContainsShapes(pointer);
         const shape = this._engine.canvas.detectionShape(pointer);

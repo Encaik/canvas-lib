@@ -9,7 +9,7 @@ export class Detection {
 
     constructor(options?: CanvasOptions){
         this._detectionCanvas = document.createElement("canvas");
-        this._detectionCtx = this._detectionCanvas.getContext("2d");
+        this._detectionCtx = this._detectionCanvas.getContext("2d", { alpha: false });
         // document.body.appendChild(this._detectionCanvas);
         if (options.width) this._detectionCanvas.width= options.width;
         if (options.height) this._detectionCanvas.height= options.height;
@@ -61,5 +61,9 @@ export class Detection {
         if(this._shapeMap.has(color)){
             return this._shapeMap.get(color);
         }
+    }
+
+    public translate(x:number,y:number){
+        this._detectionCtx.translate(x,y);
     }
 }
