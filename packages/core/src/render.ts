@@ -17,8 +17,13 @@ export class Render{
         this._lastTime = this._nowTime;
         this._nowTime = performance.now();
         this._fps = Math.round(1000/(this._nowTime-this._lastTime));
-        window.requestAnimationFrame(()=>{
-            this.renderer();
-        });
+        console.log(this._fps);
+        // window.requestAnimationFrame(()=>{
+        //     this.renderer();
+        // });
+    }
+
+    update(){
+        this.renderer();
     }
 }

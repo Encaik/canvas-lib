@@ -11,13 +11,11 @@ const engine = new CL.Engine("canvas", {
 });
 
 engine.on("shapein",(e)=>{
-    console.log(e);
     e.data.shape.strokeColor = new CL.Color("#5f5");
     e.data.shape.strokeWidth = 5;
 });
 
 engine.on("shapeout",(e)=>{
-    console.log(e);
     e.data.shape.strokeColor = null;
     e.data.shape.strokeWidth = 1;
 });

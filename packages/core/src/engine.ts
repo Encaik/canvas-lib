@@ -11,6 +11,7 @@ export class Engine {
     public scene: Scene;
     public canvas: Canvas;
     public dispatcher:EventDispatch;
+    public render:Render;
 
     constructor(container: string, canvasOptions?: CanvasOptions){
         this.initEngine(container,canvasOptions);
@@ -19,7 +20,7 @@ export class Engine {
     initEngine(container: string, canvasOptions?: CanvasOptions){
         this.scene = new Scene();
         this.canvas = new Canvas(container,this.scene,canvasOptions);
-        new Render(this);
+        this.render = new Render(this);
         this.dispatcher = new EventDispatch();
         new Behavior(this);
     }
@@ -30,5 +31,9 @@ export class Engine {
 
     off(type:EventType,fn:(event: Event)=>void){
         this.dispatcher.off(type,fn);
+    }
+
+    update(){
+        this.render.update();
     }
 }
