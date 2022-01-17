@@ -12,6 +12,8 @@ export class Rect extends Entity {
         this.width = options.width;
     }
 
+    
+
     isContains(point:Point):boolean{
         return point.x<this.center.x+this.width&&point.x>this.center.x&&point.y<this.center.y+this.height&&point.y>this.center.y;
     }

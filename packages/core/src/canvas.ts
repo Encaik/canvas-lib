@@ -1,6 +1,7 @@
 import { Point } from ".";
 import { CanvasOptions,CanvasTransform } from "../types";
 import { Detection } from "./detection";
+import { drawReact } from "./draw";
 import { Scene } from "./scene";
 import { Entity, Rect } from "./shape";
 
@@ -43,21 +44,10 @@ export class Canvas {
     public addEntity(entity: Entity,addScene=true) {
         this._detection.addEntity(entity);
         if (entity.type === "rect") {
-            this.addRect(<Rect>entity);
+            drawReact(this._ctx,this._transform,<Rect>entity);
             if(addScene){
                 this._scene.entityList.push(entity);
             }
-      
-        }
-    }
-
-    public addRect(rect: Rect) {
-        this._ctx.fillStyle = rect.fillColor.hex;
-        this._ctx.fillRect(rect.center.x+this._transform.translate.x, rect.center.y+this._transform.translate.y, rect.width, rect.height);
-        if(rect.strokeColor){
-            this._ctx.strokeStyle = rect.strokeColor.hex;
-            this._ctx.lineWidth = rect.strokeWidth;
-            this._ctx.strokeRect(rect.center.x+this._transform.translate.x, rect.center.y+this._transform.translate.y, rect.width, rect.height);
         }
     }
 

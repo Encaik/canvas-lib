@@ -1,5 +1,7 @@
 import { Entity, Point, Rect } from ".";
 import { CanvasOptions,CanvasTransform } from "..";
+import { Color } from "./color";
+import { drawReact } from "./draw";
 
 export class Detection {
     private _detectionCtx: CanvasRenderingContext2D;
@@ -26,26 +28,22 @@ export class Detection {
     }
 
     addEntity(entity:Entity){
+        let color = [0,0,0];
         if(this._colorMap.has(entity)){
-            const color = this._colorMap.get(entity);
-            this.addRect(<Rect>entity,color);
+            color = this._colorMap.get(entity);
         }else{
-            const color = this.randomColor();
+            color = this.randomColor();
             this._shapeMap.set(color.join(","),entity);
             this._colorMap.set(entity,color);
-            if (entity.type === "rect") {
-                this.addRect(<Rect>entity,color);
+        }
+        if (entity.type === "rect") {
+            const options = {
+                fillColor : new Color(`rgb(${color[0]},${color[1]},${color[2]})`)
+            };
+            if(entity.strokeColor){
+                options["strokeColor"] = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
             }
-        } 
-    }
-
-    addRect(rect: Rect,color:number[]) {
-        this._detectionCtx.fillStyle = `rgb(${color[0]},${color[1]},${color[2]})`;
-        this._detectionCtx.fillRect(rect.center.x+this._transform.translate.x, rect.center.y+this._transform.translate.y, rect.width, rect.height);
-        if(rect.strokeColor){
-            this._detectionCtx.strokeStyle = `rgb(${color[0]},${color[1]},${color[2]})`;
-            this._detectionCtx.lineWidth = rect.strokeWidth;
-            this._detectionCtx.strokeRect(rect.center.x+this._transform.translate.x, rect.center.y+this._transform.translate.y, rect.width, rect.height);
+            drawReact(this._detectionCtx,this._transform,<Rect>entity,options);
         }
     }
 
