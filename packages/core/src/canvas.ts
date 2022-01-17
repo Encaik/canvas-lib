@@ -1,5 +1,5 @@
 import { Point } from ".";
-import { CanvasOptions } from "../types";
+import { CanvasOptions,CanvasTransform } from "../types";
 import { Detection } from "./detection";
 import { Scene } from "./scene";
 import { Entity, Rect } from "./shape";
@@ -10,6 +10,12 @@ export class Canvas {
     private _canvas: HTMLCanvasElement;
     private _scene: Scene;
     private _detection:Detection;
+    private _transform:CanvasTransform = {
+        translate: {
+            x:0,
+            y:0
+        }
+    };
     public options:CanvasOptions;
 
     constructor(container: string, scene:Scene,options?: CanvasOptions) {
@@ -47,11 +53,11 @@ export class Canvas {
 
     public addRect(rect: Rect) {
         this._ctx.fillStyle = rect.fillColor.hex;
-        this._ctx.fillRect(rect.center.x, rect.center.y, rect.width, rect.height);
+        this._ctx.fillRect(rect.center.x+this._transform.translate.x, rect.center.y+this._transform.translate.y, rect.width, rect.height);
         if(rect.strokeColor){
             this._ctx.strokeStyle = rect.strokeColor.hex;
             this._ctx.lineWidth = rect.strokeWidth;
-            this._ctx.strokeRect(rect.center.x, rect.center.y, rect.width, rect.height);
+            this._ctx.strokeRect(rect.center.x+this._transform.translate.x, rect.center.y+this._transform.translate.y, rect.width, rect.height);
         }
     }
 
@@ -63,11 +69,11 @@ export class Canvas {
         const span = 100;
         this._ctx.beginPath();
         this._ctx.lineWidth = 0.1;
-        for(let x=0;x<this._canvas.width;x+=span){
+        for(let x=this._transform.translate.x%span;x<this._canvas.width;x+=span){
             this._ctx.moveTo(x,0);
             this._ctx.lineTo(x,this._canvas.height);
         }
-        for(let y=0;y<this._canvas.height;y+=span){
+        for(let y=this._transform.translate.y%span;y<this._canvas.height;y+=span){
             this._ctx.moveTo(0,y);
             this._ctx.lineTo(this._canvas.width,y);
         }
@@ -84,8 +90,10 @@ export class Canvas {
         this._scene.entityList.forEach(entity => this.addEntity(entity,false));
     }
 
-    public translate(x:number,y:number){
-        this._ctx.translate(x,y);
+    public translate(offsetX:number,offsetY:number){
+        const x = this._transform.translate.x+offsetX;
+        const y = this._transform.translate.y+offsetY;
+        this._transform.translate = {x,y};
         this._detection.translate(x,y);
     }
 

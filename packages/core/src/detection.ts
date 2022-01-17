@@ -1,11 +1,18 @@
 import { Entity, Point, Rect } from ".";
-import { CanvasOptions } from "..";
+import { CanvasOptions,CanvasTransform } from "..";
 
 export class Detection {
     private _detectionCtx: CanvasRenderingContext2D;
     private _detectionCanvas: HTMLCanvasElement;
     private _shapeMap:Map<string,Entity>;
     private _colorMap:Map<Entity,number[]>;
+    private _transform:CanvasTransform = {
+        translate: {
+            x:0,
+            y:0
+        }
+    };
+    
 
     constructor(options?: CanvasOptions){
         this._detectionCanvas = document.createElement("canvas");
@@ -34,11 +41,11 @@ export class Detection {
 
     addRect(rect: Rect,color:number[]) {
         this._detectionCtx.fillStyle = `rgb(${color[0]},${color[1]},${color[2]})`;
-        this._detectionCtx.fillRect(rect.center.x, rect.center.y, rect.width, rect.height);
+        this._detectionCtx.fillRect(rect.center.x+this._transform.translate.x, rect.center.y+this._transform.translate.y, rect.width, rect.height);
         if(rect.strokeColor){
             this._detectionCtx.strokeStyle = `rgb(${color[0]},${color[1]},${color[2]})`;
             this._detectionCtx.lineWidth = rect.strokeWidth;
-            this._detectionCtx.strokeRect(rect.center.x, rect.center.y, rect.width, rect.height);
+            this._detectionCtx.strokeRect(rect.center.x+this._transform.translate.x, rect.center.y+this._transform.translate.y, rect.width, rect.height);
         }
     }
 
@@ -64,6 +71,6 @@ export class Detection {
     }
 
     public translate(x:number,y:number){
-        this._detectionCtx.translate(x,y);
+        this._transform.translate = {x,y};
     }
 }

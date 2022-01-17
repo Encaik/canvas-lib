@@ -16,4 +16,13 @@ export interface EntityOptions {
   strokeWidth?: number;
 }
 
+export interface CanvasTransform {
+  translate:CanvasTranslate
+}
+
+export interface CanvasTranslate {
+  x:number;
+  y:number;
+}
+
 export type EventType = "click"|"mousemove"|"shapehover"|"mousedown"|"mouseup"|"shapein"|"shapeout";
