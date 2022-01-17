@@ -98,7 +98,7 @@ export class Behavior {
         this._dragShape = this._engine.canvas.detectionShape(pointer);
     }
 
-    onMouseUp(e:Event){
+    onMouseUp(){
         this._isDrag=false;
         this._dragBeforePointer = null;
         this._dragShape = undefined;
