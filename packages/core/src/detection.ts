@@ -28,6 +28,7 @@ export class Detection {
     }
 
     addEntity(entity:Entity){
+        const _e = {...entity};
         let color = [0,0,0];
         if(this._colorMap.has(entity)){
             color = this._colorMap.get(entity);
@@ -37,13 +38,11 @@ export class Detection {
             this._colorMap.set(entity,color);
         }
         if (entity.type === "rect") {
-            const options = {
-                fillColor : new Color(`rgb(${color[0]},${color[1]},${color[2]})`)
-            };
+            _e.fillColor = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
             if(entity.strokeColor){
-                options["strokeColor"] = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
+                _e["strokeColor"] = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
             }
-            drawReact(this._detectionCtx,this._transform,<Rect>entity,options);
+            drawReact(this._detectionCtx,this._transform,<Rect>_e);
         }
     }
 

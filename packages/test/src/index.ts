@@ -24,8 +24,9 @@ const rect = new CL.Rect({
     id: "1",
     center: new CL.Point(523, 150),
     type: "rect",
-    width: 100,
-    height: 50,
+    width: 300,
+    height: 150,
+    radius:20,
     fillColor: new CL.Color("#f55"),
 });
 

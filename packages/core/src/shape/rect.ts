@@ -5,11 +5,13 @@ import { Entity } from "./entity";
 export class Rect extends Entity {
     public width: number;
     public height: number;
+    public radius: number;
 
-    constructor(options: { width: number, height: number } & EntityOptions) {
+    constructor(options: { width?: number, height?: number,radius?:number } & EntityOptions) {
         super({ ...options, type: "rect" });
-        this.height = options.height;
-        this.width = options.width;
+        this.height = options.height||50;
+        this.width = options.width||50;
+        this.radius = options.radius||0;
     }
 
     
