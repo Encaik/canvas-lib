@@ -24,11 +24,22 @@ const rect = new CL.Rect({
     id: "1",
     center: new CL.Point(523, 150),
     type: "rect",
-    width: 300,
-    height: 150,
-    radius:20,
+    width: 200,
+    height: 120,
+    radius:10,
     fillColor: new CL.Color("#f55"),
 });
 
 engine.canvas.addEntity(rect);
+
+const circle = new CL.Circle({
+    id:"2",
+    center: new CL.Point(523, 350),
+    type: "circle",
+    radius:50,
+    fillColor: new CL.Color("#55f"),
+});
+
+engine.canvas.addEntity(circle);
+
 console.log(engine);

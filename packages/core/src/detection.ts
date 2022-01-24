@@ -1,7 +1,7 @@
-import { Entity, Point, Rect } from ".";
+import { Circle, Entity, Point, Rect } from ".";
 import { CanvasOptions,CanvasTransform } from "..";
 import { Color } from "./color";
-import { drawReact } from "./draw";
+import { drawCircle, drawReact } from "./draw";
 
 export class Detection {
     private _detectionCtx: CanvasRenderingContext2D;
@@ -37,12 +37,19 @@ export class Detection {
             this._shapeMap.set(color.join(","),entity);
             this._colorMap.set(entity,color);
         }
-        if (entity.type === "rect") {
-            _e.fillColor = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
-            if(entity.strokeColor){
-                _e["strokeColor"] = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
-            }
+        _e.fillColor = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
+        if(entity.strokeColor){
+            _e["strokeColor"] = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
+        }
+        switch (entity.type) {
+        case "rect":
             drawReact(this._detectionCtx,this._transform,<Rect>_e);
+            break;
+        case "circle":
+            drawCircle(this._detectionCtx,this._transform,<Circle>_e);
+            break;
+        default:
+            break;
         }
     }
 

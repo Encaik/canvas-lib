@@ -1,4 +1,4 @@
-import { Rect } from "./shape";
+import { Circle, Rect } from "./shape";
 import { CanvasTransform } from "../types";
 
 export function fillRect(ctx:any,x:number,y:number,w:number,h:number){
@@ -47,12 +47,31 @@ export function drawReact(ctx:any,transform:CanvasTransform,rect: Rect) {
     }
     if(rect.strokeColor){
         ctx.strokeStyle = rect.strokeColor.hex||rect.strokeColor.rgb;
-        ctx.lineWidth = rect.strokeWidth || 1;
+        ctx.lineWidth = rect.strokeWidth;
         if(rect.radius){
             strokeRoundRect(ctx,x,y,r,w,h);
         }else{
             strokeRect(ctx,x,y,w,h);
         } 
+    }
+    ctx.restore();
+}
+
+export function drawCircle(ctx:any,transform:CanvasTransform,circle: Circle){
+    ctx.save();
+    const x = circle.center.x+transform.translate.x;
+    const y = circle.center.y+transform.translate.y;
+    const r = circle.radius;
+    ctx.fillStyle =circle.fillColor.hex||circle.fillColor.rgb;
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,2*Math.PI);
+    ctx.fill();
+    if(circle.strokeColor){
+        ctx.strokeStyle = circle.strokeColor.hex||circle.strokeColor.rgb;
+        ctx.lineWidth = circle.strokeWidth;
+        ctx.beginPath();
+        ctx.arc(x,y,r,0,2*Math.PI);
+        ctx.stroke();
     }
     ctx.restore();
 }
