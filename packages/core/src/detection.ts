@@ -1,13 +1,13 @@
-import { Circle, Entity, Point, Rect } from ".";
-import { CanvasOptions,CanvasTransform } from "..";
+import * as Shape from ".";
+import { CanvasOptions,CanvasTransform, Point } from "..";
 import { Color } from "./color";
-import { drawCircle, drawReact } from "./draw";
+import { draw } from "./draw";
 
 export class Detection {
     private _detectionCtx: CanvasRenderingContext2D;
     private _detectionCanvas: HTMLCanvasElement;
-    private _shapeMap:Map<string,Entity>;
-    private _colorMap:Map<Entity,number[]>;
+    private _shapeMap:Map<string,Shape.Entity>;
+    private _colorMap:Map<Shape.Entity,number[]>;
     private _transform:CanvasTransform = {
         translate: {
             x:0,
@@ -27,7 +27,7 @@ export class Detection {
 
     }
 
-    addEntity(entity:Entity){
+    addEntity(entity:Shape.Entity){
         const _e = {...entity};
         let color = [0,0,0];
         if(this._colorMap.has(entity)){
@@ -41,16 +41,7 @@ export class Detection {
         if(entity.strokeColor){
             _e["strokeColor"] = new Color(`rgb(${color[0]},${color[1]},${color[2]})`);
         }
-        switch (entity.type) {
-        case "rect":
-            drawReact(this._detectionCtx,this._transform,<Rect>_e);
-            break;
-        case "circle":
-            drawCircle(this._detectionCtx,this._transform,<Circle>_e);
-            break;
-        default:
-            break;
-        }
+        draw(this._detectionCtx,this._transform,<Shape.Entity>_e);
     }
 
     public update(){
@@ -66,7 +57,7 @@ export class Detection {
         }
     }
 
-    public detectionShape(point:Point):Entity{
+    public detectionShape(point:Point):Shape.Entity{
         const imgData = this._detectionCtx.getImageData(point.x,point.y,1,1);
         const color = [imgData.data[0],imgData.data[1],imgData.data[2]].join(",");
         if(this._shapeMap.has(color)){

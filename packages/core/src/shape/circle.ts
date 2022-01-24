@@ -5,7 +5,7 @@ import { Entity } from "./entity";
 export class Circle extends Entity {
     public radius: number;
 
-    constructor(options: { width?: number, height?: number,radius?:number } & EntityOptions) {
+    constructor(options: { radius?:number } & EntityOptions) {
         super({ ...options, type: "circle" });
         this.radius = options.radius||10;
     }

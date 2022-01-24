@@ -1,9 +1,9 @@
 import { Point } from ".";
 import { CanvasOptions,CanvasTransform } from "../types";
 import { Detection } from "./detection";
-import { drawCircle, drawReact } from "./draw";
+import { draw, drawCircle, drawReact, drawText } from "./draw";
 import { Scene } from "./scene";
-import { Circle, Entity, Rect } from "./shape";
+import * as Shape from "./shape";
 
 
 export class Canvas {
@@ -41,18 +41,9 @@ export class Canvas {
         return this;
     }
 
-    public addEntity(entity: Entity,addScene=true) {
+    public addEntity(entity: Shape.Entity,addScene=true) {
         this._detection.addEntity(entity);
-        switch (entity.type) {
-        case "rect":
-            drawReact(this._ctx,this._transform,<Rect>entity);
-            break;
-        case "circle":
-            drawCircle(this._ctx,this._transform,<Circle>entity);
-            break;
-        default:
-            break;
-        }
+        draw(this._ctx,this._transform,<Shape.Entity>entity);
         if(addScene){
             this._scene.entityList.push(entity);
         }
@@ -94,7 +85,7 @@ export class Canvas {
         this._detection.translate(x,y);
     }
 
-    public detectionShape(point:Point):Entity{
+    public detectionShape(point:Point):Shape.Entity{
         return this._detection.detectionShape(point);
     }
 } 

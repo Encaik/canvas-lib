@@ -1,4 +1,4 @@
-import { Circle, Rect } from "./shape";
+import * as Shape from "./shape";
 import { CanvasTransform } from "../types";
 
 export function fillRect(ctx:any,x:number,y:number,w:number,h:number){
@@ -32,7 +32,7 @@ export function strokeRoundRect(ctx:any,x:number,y:number,r:number,w:number,h:nu
     ctx.stroke();
 }
 
-export function drawReact(ctx:any,transform:CanvasTransform,rect: Rect) {
+export function drawReact(ctx:any,transform:CanvasTransform,rect: Shape.Rect) {
     ctx.save();
     const x = rect.center.x+transform.translate.x;
     const y = rect.center.y+transform.translate.y;
@@ -57,7 +57,7 @@ export function drawReact(ctx:any,transform:CanvasTransform,rect: Rect) {
     ctx.restore();
 }
 
-export function drawCircle(ctx:any,transform:CanvasTransform,circle: Circle){
+export function drawCircle(ctx:any,transform:CanvasTransform,circle: Shape.Circle){
     ctx.save();
     const x = circle.center.x+transform.translate.x;
     const y = circle.center.y+transform.translate.y;
@@ -74,4 +74,39 @@ export function drawCircle(ctx:any,transform:CanvasTransform,circle: Circle){
         ctx.stroke();
     }
     ctx.restore();
+}
+
+export function drawText(ctx:any,transform:CanvasTransform,text: Shape.Text){
+    ctx.save();
+    const x = text.center.x+transform.translate.x;
+    const y = text.center.y+transform.translate.y;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = `${text.fontStyle} ${text.fontVariant} ${text.fontWeight} ${text.fontSize}px ${text.fontFamily}`;
+    ctx.fillStyle =text.fillColor.hex||text.fillColor.rgb;
+    ctx.beginPath();
+    ctx.fillText(text.content, x, y,text.maxWidth);
+    if(text.strokeColor){
+        ctx.strokeStyle = text.strokeColor.hex||text.strokeColor.rgb;
+        ctx.lineWidth = text.strokeWidth;
+        ctx.beginPath();
+        ctx.strokeText(text.content, x, y,text.maxWidth);
+    }
+    ctx.restore();
+}
+
+export function draw(ctx:any,transform:CanvasTransform,entity: Shape.Entity){
+    switch (entity.type) {
+    case "rect":
+        drawReact(ctx,transform,<Shape.Rect>entity);
+        break;
+    case "circle":
+        drawCircle(ctx,transform,<Shape.Circle>entity);
+        break;
+    case "text":
+        drawText(ctx,transform,<Shape.Text>entity);
+        break;
+    default:
+        break;
+    }
 }
