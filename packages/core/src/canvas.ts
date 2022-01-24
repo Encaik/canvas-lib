@@ -1,7 +1,7 @@
 import { Point } from ".";
 import { CanvasOptions,CanvasTransform } from "../types";
 import { Detection } from "./detection";
-import { draw, drawCircle, drawReact, drawText } from "./draw";
+import { draw } from "./draw";
 import { Scene } from "./scene";
 import * as Shape from "./shape";
 
